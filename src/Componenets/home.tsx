@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -7,19 +8,21 @@ const Home = () => {
       <h1>Welcome to the CRUD App</h1>
       <p>This is a simple React application to manage posts.</p>
       
-      <button
+      <Button
+        variant="primary"
         style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer" }}
         onClick={() => navigate("/product-list")}
+        className="me-2"
       >
         Go to Product List
-      </button>
-      &nbsp;
-      <button
+      </Button>
+      <Button
+        variant="primary"
         style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer" }}
         onClick={() => navigate("/category-list")}
       >
         Go to Category List
-      </button>
+      </Button>
     </div>
   );
 };

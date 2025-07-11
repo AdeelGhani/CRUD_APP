@@ -159,40 +159,47 @@ const CategoryList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {categories.map((cat, idx) => (
-            <tr key={cat.id}>
-              <td>{idx + 1}</td>
-              <td>{cat.categoryName}</td>
-              <td>{cat.categoryDescription}</td>
+          {categories.length > 0 ? (
+            categories.map((cat, idx) => (
+              <tr key={cat.id}>
+                <td>{idx + 1}</td>
+                <td>{cat.categoryName}</td>
+                <td>{cat.categoryDescription}</td>
 
-
-              <td>
-                <Button
-                  variant="warning"
-                  size="sm"
-                  onClick={() => handleEdit(cat.id)}
-                  className="me-2"
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleDelete(cat.id)}
-                  className="me-2"
-                >
-                  Delete
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => handleViewProducts(cat.id)}
-                >
-                  View Products
-                </Button>
+                <td>
+                  <Button
+                    variant="warning"
+                    size="sm"
+                    onClick={() => handleEdit(cat.id)}
+                    className="me-2"
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleDelete(cat.id)}
+                    className="me-2"
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() => handleViewProducts(cat.id)}
+                  >
+                    View Products
+                  </Button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={8} className="text-center">
+                No Category Found
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
 

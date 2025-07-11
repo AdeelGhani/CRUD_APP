@@ -207,34 +207,42 @@ const ProductList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((prod, idx) => (
-            <tr key={prod.id}>
-              <td>{idx + 1}</td>
-              <td>{prod.productName}</td>
-              <td>{prod.productDescription}</td>
-              <td>{prod.price}</td>
-              <td>{prod.stockQuantity}</td>
-              <td>{prod.sku}</td>
-              <td>{categories.find((cat) => cat.id === prod.categoryId)?.categoryName || "-"}</td>
-              <td>
-                <Button
-                  variant="warning"
-                  size="sm"
-                  onClick={() => handleEdit(prod.id)}
-                  className="me-2"
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleDelete(prod.id)}
-                >
-                  Delete
-                </Button>
-              </td>
+          {products.length > 0 ? (
+            products.map((prod, idx) => (
+              <tr key={prod.id}>
+                <td>{idx + 1}</td>
+                <td>{prod.productName}</td>
+                <td>{prod.productDescription}</td>
+                <td>{prod.price}</td>
+                <td>{prod.stockQuantity}</td>
+                <td>{prod.sku}</td>
+                <td>
+                  {categories.find((cat) => cat.id === prod.categoryId)?.categoryName || "-"}
+                </td>
+                <td>
+                  <Button
+                    variant="warning"
+                    size="sm"
+                    onClick={() => handleEdit(prod.id)}
+                    className="me-2"
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleDelete(prod.id)}
+                  >
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={8} className="text-center">No Products Found</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
 
