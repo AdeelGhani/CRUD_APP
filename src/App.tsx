@@ -3,6 +3,7 @@ import CategoryList from "./Componenets/category/CategoryList";
 import Home from "./Componenets/home";
 // import PostList from "./Componenets/posts/postlist";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProductList from "./Componenets/product/ProductList";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={<Home />} />
             {/* <Route path="/post-list" element={<PostList />} /> */}
             <Route path="/category-list" element={<CategoryList />} />
+            <Route path="/product-list" element={<ProductList />} />
           </Routes>
         </Router>
       </div>

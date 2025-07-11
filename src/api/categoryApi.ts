@@ -1,5 +1,5 @@
 import type { AxiosResponse } from "axios";
-import type { Category } from "../interfaces/post";
+import type { Category } from "../interfaces/interfaces";
 import { api } from "./api";
 
 export const getAllCategories = (): Promise<AxiosResponse<Category[]>> => {

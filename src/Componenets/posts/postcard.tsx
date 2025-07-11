@@ -1,5 +1,5 @@
 import { Card, Button } from "react-bootstrap";
-import type { Post } from "../../interfaces/post";
+import type { Post } from "../../interfaces/interfaces";
 
 interface PostCardProps {
   post: Post;

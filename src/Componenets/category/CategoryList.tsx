@@ -7,12 +7,13 @@ import {
   deleteCategory,
   getCategoryById,
 } from "../../api/categoryApi";
-import type { Category } from "../../interfaces/post";
+import type { Category } from "../../interfaces/interfaces";
 import type { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
 
 const initialFormState: Omit<Category, "id"> = {
   categoryName: "",
-  description: "",
+  categoryDescription: "",
   imageUrl: "",
   isActive: true,
   createdDate: new Date().toISOString(),
@@ -26,7 +27,7 @@ const CategoryList: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState<Omit<Category, "id">>(initialFormState);
   const [editId, setEditId] = useState<number | null>(null);
-
+  const navigate = useNavigate();
   const fetchCategories = () => {
     setLoading(true);
     getAllCategories()
@@ -89,7 +90,7 @@ const CategoryList: React.FC = () => {
       const { data } = await getCategoryById(id);
       setForm({
         categoryName: data.categoryName,
-        description: data.description,
+        categoryDescription: data.categoryDescription,
         imageUrl: data.imageUrl,
         isActive: data.isActive,
         createdDate: data.createdDate,
@@ -113,15 +114,41 @@ const CategoryList: React.FC = () => {
     }
   };
 
+  const handleViewProducts = async (id: number) => {
+    navigate(`/product-list?categoryId=${id}`);
+  };
+
   if (loading) return <div>Loading categories...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div className="container mt-4">
       <h2>Category List</h2>
-      <Button variant="primary" className="mb-3" onClick={handleShowModal}>
-        Add Category
-      </Button>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 16,
+        }}
+      >
+        <Button variant="primary" onClick={handleShowModal}>
+          Add Category
+        </Button>
+        <div>
+          <Button
+            variant="primary"
+            className="me-2"
+            onClick={() => navigate("/product-list")}
+          >
+            Go to Product List
+          </Button>
+
+          <Button variant="primary" onClick={() => navigate("/")}>
+            Go to Home
+          </Button>
+        </div>
+      </div>
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -137,10 +164,10 @@ const CategoryList: React.FC = () => {
             <tr key={cat.id}>
               <td>{idx + 1}</td>
               <td>{cat.categoryName}</td>
-              <td>{cat.description}</td>
-             
+              <td>{cat.categoryDescription}</td>
+
               <td>{cat.isActive ? "Active" : "Inactive"}</td>
-              
+
               <td>
                 <Button
                   variant="warning"
@@ -154,8 +181,16 @@ const CategoryList: React.FC = () => {
                   variant="danger"
                   size="sm"
                   onClick={() => handleDelete(cat.id)}
+                  className="me-2"
                 >
                   Delete
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => handleViewProducts(cat.id)}
+                >
+                  View Products
                 </Button>
               </td>
             </tr>
@@ -185,8 +220,8 @@ const CategoryList: React.FC = () => {
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
-                name="description"
-                value={form.description}
+                name="categoryDescription"
+                value={form.categoryDescription}
                 onChange={handleFormChange}
                 required
               />
