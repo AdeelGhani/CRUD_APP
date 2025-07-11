@@ -6,8 +6,8 @@ const Home = () => {
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Welcome to the CRUD App</h1>
-      <p>This is a simple React application to manage posts.</p>
-      
+      <p>This is a simple React application.</p>
+
       <Button
         variant="primary"
         style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer" }}
