@@ -155,7 +155,6 @@ const CategoryList: React.FC = () => {
             <th>No</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -166,7 +165,6 @@ const CategoryList: React.FC = () => {
               <td>{cat.categoryName}</td>
               <td>{cat.categoryDescription}</td>
 
-              <td>{cat.isActive ? "Active" : "Inactive"}</td>
 
               <td>
                 <Button

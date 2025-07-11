@@ -1,5 +1,5 @@
 import type { AxiosResponse } from "axios";
-import type { Category } from "../interfaces/interfaces";
+import type { Category, Product } from "../interfaces/interfaces";
 import { api } from "./api";
 
 export const getAllCategories = (): Promise<AxiosResponse<Category[]>> => {
@@ -27,4 +27,10 @@ export const getCategoryById = (
   id: number
 ): Promise<AxiosResponse<Category>> => {
   return api.get(`Category/${id}`);
+};
+
+export const getProductsByCategoryId = (
+  id: number
+): Promise<AxiosResponse<Product[]>> => {
+  return api.get(`Category/${id}/products`);
 };

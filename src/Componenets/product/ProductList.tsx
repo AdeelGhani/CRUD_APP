@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   getProductById,
+  getProductsByCategoryId,
 } from "../../api/productApi";
 import { getAllCategories } from "../../api/categoryApi";
 import type {
@@ -14,7 +15,7 @@ import type {
   Category,
 } from "../../interfaces/interfaces";
 import type { AxiosResponse } from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const initialFormState: Omit<Product, "id"> = {
   productName: "",
@@ -38,17 +39,34 @@ const ProductList: React.FC = () => {
   const [editId, setEditId] = useState<number | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const navigate = useNavigate();
+  const location = useLocation();
+
   const fetchProducts = () => {
     setLoading(true);
-    getAllProducts()
-      .then((response: AxiosResponse<ProductResponse>) => {
-        setProducts(response.data.items);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to fetch products");
-        setLoading(false);
-      });
+    // Check for categoryId in search params
+    const searchParams = new URLSearchParams(location.search);
+    const categoryId = searchParams.get("categoryId");
+    if (categoryId) {
+      getProductsByCategoryId(Number(categoryId))
+        .then((response: AxiosResponse<ProductResponse>) => {
+          setProducts(response.data.items);
+          setLoading(false);
+        })
+        .catch(() => {
+          setError("Failed to fetch products by category");
+          setLoading(false);
+        });
+    } else {
+      getAllProducts()
+        .then((response: AxiosResponse<ProductResponse>) => {
+          setProducts(response.data.items);
+          setLoading(false);
+        })
+        .catch(() => {
+          setError("Failed to fetch products");
+          setLoading(false);
+        });
+    }
   };
 
   useEffect(() => {
@@ -184,7 +202,7 @@ const ProductList: React.FC = () => {
             <th>Price</th>
             <th>Stock</th>
             <th>SKU</th>
-            <th>Status</th>
+            <th>Category</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -197,7 +215,7 @@ const ProductList: React.FC = () => {
               <td>{prod.price}</td>
               <td>{prod.stockQuantity}</td>
               <td>{prod.sku}</td>
-              <td>{prod.isActive ? "Active" : "Inactive"}</td>
+              <td>{categories.find((cat) => cat.id === prod.categoryId)?.categoryName || "-"}</td>
               <td>
                 <Button
                   variant="warning"

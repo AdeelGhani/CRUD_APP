@@ -38,3 +38,13 @@ export const getProductById = (
 ): Promise<AxiosResponse<Product>> => {
   return api.get(`Product/${id}`);
 };
+
+// Get products by categoryId
+export const getProductsByCategoryId = (categoryId: number): Promise<AxiosResponse<ProductResponse>> => {
+  return api.get(`Category/${categoryId}/products`, {
+    params: {
+      pageNumber: 1,
+      pageSize: 1000,
+    },
+  });
+};
